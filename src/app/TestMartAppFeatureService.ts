@@ -33,7 +33,7 @@ abstract class AbstractTestMartAppFeatures {
   abstract addProductImagesToUserCart(userId: number): Product[];
 }
 
-export class TestMartAppFeaturesService {
+export class TestMartAppFeatureService {
     getProductTitlesByWorseRating(rating: number): void {
         throw new Error('Not yet implemented.')
     }
