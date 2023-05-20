@@ -1,5 +1,5 @@
 import { Product } from '../types/Product'
-import { Category } from '../types/Category'
+import { CategoryTypes } from '../types/Category'
 
 // Note: the generic type parameters P and C are used to represent the types of the product and category, respectively
 interface ProductServiceI<P, C> {
@@ -28,7 +28,7 @@ interface ProductServiceI<P, C> {
     getProductsByCategory(categoryName: string): P[]
 }
 
-export class ProductService<Product, C> {
+export class ProductService<Product, CategoryTypes> {
     // Get all products of TestMart
     // API endpoint to get data: https://dummyjson.com/products
     getAllProducts(): Product[];
@@ -50,7 +50,7 @@ export class ProductService<Product, C> {
 
     // Get all products categories in TestMart
     // API endpoint to get data: https://dummyjson.com/products/categories
-    getCategories(): Category[] {
+    getCategories(): CategoryTypes[] {
         throw new Error('Not yet implemented.')
     }
 
