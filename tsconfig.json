@@ -1,8 +1,8 @@
 {
-  "compilerOptions": {
-    "noImplicitAny": true,
-    "target": "ES2015"
-  },
-  "exclude": ["node_modules", "dist", "**/*.spec.*"],
-  "include": ["src/**/*.ts", "src/**/*.csv"]
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "target": "ES2015"
+    },
+    "exclude": ["node_modules", "dist", "**/*.spec.*"],
+    "include": ["src/**/*.ts", "src/**/*.csv"]
 }

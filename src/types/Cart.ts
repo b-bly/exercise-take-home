@@ -1,3 +1,1 @@
-export interface Cart {
-
-}
+export interface Cart {}
