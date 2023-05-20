@@ -4,7 +4,7 @@
     "description": "This exercise involves working with dummy API endpoints related to an e-commerce shopping cart. Each endpoint returns a JSON-formatted response. Implement the required business functionality by processing these responses and integrating them into your solution. - Build System: Utilize Gradle for building and managing the project. - Language: Choose either __Java__ or __Kotlin__ for implementing the solution. (See below for `JavaScript` or `TypeScript` specific changes) - Design Principle: Opt for object composition over inheritance to promote modularity and flexibility. - Separation of Concerns: Ensure that functionalities are not mixed; adhere to the *Single Responsibility Principle* for clear code organization. - DRY Principle: Avoid code repetition by reusing existing code or creating reusable components. - Testing: Develop `JUnit` tests to verify the correctness and robustness of your solution. - Logging: Integrate logging to provide better insights during debugging. - Interface Implementation: Thoroughly implement all methods in the given interfaces ([CartService.java](model%2Fcontract%2FCartService.java), [ProductService.java](model%2Fcontract%2FProductService.java), [UserService.java](src%2Fmain%2Fjava%2Forg%2Fddm%2Ftestmart%2Fmodel%2Fcontract%2FUserService.java) ), taking into account the corresponding `JSON` response of the API call specified in the Javadoc. - Business Functionality: Achieve the required business functionality by implementing abstract methods in the [AbstractTestMartAppFeatures.java](src%2Fmain%2Fjava%2Forg%2Fddm%2Ftestmart%2Fapp%2FAbstractTestMartAppFeatures.java) abstract class. Convert this abstract class into a concrete class. To accomplish the desired functionality, you will need to implement the above provided interfaces as well.",
     "main": "dist/main.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "npx jest",
         "prettier": "npx prettier --write ."
     },
     "repository": {
@@ -18,9 +18,16 @@
     },
     "homepage": "https://github.com/b-bly/exercise-take-home#readme",
     "devDependencies": {
+        "@jest/globals": "^29.5.0",
+        "@types/jest": "^29.5.1",
         "gulp": "^4.0.0",
         "gulp-typescript": "^6.0.0-alpha.1",
         "prettier": "2.8.8",
+        "ts-jest": "^29.1.0",
+        "ts-node": "^10.9.1",
         "typescript": "^5.0.4"
+    },
+    "engines": {
+        "node": ">=18.16.0"
     }
 }

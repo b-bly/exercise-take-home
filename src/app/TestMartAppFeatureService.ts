@@ -38,6 +38,10 @@ export class TestMartAppFeatureService {
         throw new Error('Not yet implemented.')
     }
 
+    sortProductTitlesByWorseRating(rating: number): string[] {
+        throw new Error('Not yet implemented.')
+    }
+
     getCartWithHighestTotal(): Cart {
         throw new Error('Not yet implemented.')
     }
