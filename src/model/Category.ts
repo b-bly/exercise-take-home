@@ -1,4 +1,4 @@
-export enum CategoryTypes {
+export enum ICategory {
     smartphones = 'smartphones',
     laptops = 'laptops',
     fragrances = 'fragrances',

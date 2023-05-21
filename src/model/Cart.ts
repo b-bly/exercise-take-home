@@ -1,4 +1,4 @@
-interface CartProduct {
+interface ICartProduct {
     id: number
     title: string
     price: number 
@@ -8,9 +8,9 @@ interface CartProduct {
     discountedPrice: number
 }
 
-export interface Cart {
+export interface ICart {
     id: number
-    products: CartProduct[]
+    products: ICartProduct[]
     total: number
     discountedTotal: number
     userId: number

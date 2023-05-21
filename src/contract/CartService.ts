@@ -1,4 +1,4 @@
-import { Cart } from "../types/Cart"
+import { ICart } from "../model"
 
 interface CartServiceI<T> {
     // Get all carts of TestMart
@@ -14,22 +14,22 @@ interface CartServiceI<T> {
     getUserCarts(userId: number): T[]
 }
 
-export class CartService implements CartServiceI<Cart> {
+export class CartService implements CartServiceI<ICart> {
     // Get all carts of TestMart
     // API endpoint to get data: https://dummyjson.com/carts
-    getAllCarts(): Cart[] {
+    getAllCarts(): ICart[] {
         throw new Error('Not yet implemented.')
     }
 
     // Get a single cart
     // API endpoint to get data: https://dummyjson.com/carts/{cartId}
-    getCart(cartId: number): Cart {
+    getCart(cartId: number): ICart {
         throw new Error('Not yet implemented.')
     }
 
     // Get carts of a user
     // API endpoint to get data: https://dummyjson.com/carts/user/{userId}
-    getUserCarts(userId: number): Cart[] {
+    getUserCarts(userId: number): ICart[] {
         throw new Error('Not yet implemented.')
     }
 }
