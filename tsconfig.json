@@ -8,6 +8,6 @@
         "resolveJsonModule": true,
         "esModuleInterop": true
     },
-    "exclude": ["node_modules", "dist", "**/*.spec.*"],
+    "exclude": ["node_modules", "dist", "**/*.spec.*", "test"],
     "include": ["src/**/*.ts", "src/**/*.csv", "test/TestMartAppFeatureService.spec.ts"]
 }

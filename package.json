@@ -18,6 +18,7 @@
     },
     "homepage": "https://github.com/b-bly/exercise-take-home#readme",
     "devDependencies": {
+        "@faker-js/faker": "^8.0.1",
         "@jest/globals": "^29.5.0",
         "@types/jest": "^29.5.1",
         "@types/node-fetch": "^2.6.4",
