@@ -1,4 +1,7 @@
 import { ICart, IProduct } from '../model'
+import { CartService } from '../contract/CartService'
+import { ProductService } from '../contract/ProductService'
+import { logger } from '../util/logger'
 
 // Note: Convert this class to concrete class and add implementation (missing body) to all functions. You will remove the word
 // `Abstract` from everywhere. This class is only kept `abstract` for the sake of interview exercise.
@@ -33,16 +36,40 @@ abstract class AbstractTestMartAppFeatures {
 }
 
 export class TestMartAppFeatureService {
+    cartService: CartService
+    productService: ProductService
+
+    constructor(CartService: CartService, ProductService: ProductService) {
+        this.cartService = CartService
+        this.productService = ProductService
+    }
+
     getProductTitlesByWorseRating(rating: number): void {
-        throw new Error('Not yet implemented.')
+        this.sortProductTitlesByWorseRating(rating).then((productTitles) =>
+            console.log(productTitles)
+        )
     }
 
     /**
      * Sort and return titles that have a rating less than or equal to the provided criteria.
-     * @param rating 
+     * @param rating
      */
-    sortProductTitlesByWorseRating(rating: number): string[] {
-        throw new Error('Not yet implemented.')
+    async sortProductTitlesByWorseRating(rating: number): Promise<string[]> {
+        logger.info(`sortProductTitlesByWorseRating with rating ${rating}`)
+        const products = await this.productService.getAllProducts(
+            1000,
+            0,
+            'rating',
+            'title'
+        )
+        // const products = await this.productService.getAllProducts()
+        const sortedProducts = products
+            .filter((product) => product.rating <= rating)
+            .map((product) => product.title)
+        logger.info(`sorted products ${sortedProducts}`)
+        return sortedProducts
+        // throw new Error('Not yet implemented.')
+   
     }
 
     getCartWithHighestTotal(): ICart {
