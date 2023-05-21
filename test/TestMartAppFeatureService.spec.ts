@@ -1,13 +1,13 @@
 import { describe, expect, it, beforeAll } from '@jest/globals'
-import { TestMartAppFeatureService } from './TestMartAppFeatureService'
+import { TestMartAppFeatureService } from '../src/app/TestMartAppFeatureService'
 import { jest } from '@jest/globals'
-import { ProductService } from '../contract/ProductService'
-import { CartService } from '../contract/CartService'
-import { ICart, IProduct } from '../model'
-import products from '../testData/products.json'
-import carts from '../testData/carts.json'
+import { ProductService } from '../src/contract/ProductService'
+import { CartService } from '../src/contract/CartService'
+import { ICart, IProduct } from '../src/model'
+import products from '../src/testData/products.json'
+import carts from '../src/testData/carts.json'
 
-jest.mock('../contract/ProductService')
+jest.mock('../src/contract/ProductService')
 
 describe('TestMartAppFeatureService', () => {
     // const MockedProductService = jest.mocked(ProductService)
@@ -33,7 +33,7 @@ describe('TestMartAppFeatureService', () => {
 
 
     describe('getCartWithHighestTotal', () => {
-        it.skip('Should return the cart with the highest total.', () => {
+        it('Should return the cart with the highest total.', () => {
             const testMartAppFeatureService = new TestMartAppFeatureService(cartService, productService)
             const getAllCarts = jest.fn<typeof cartService.getAllCarts>() 
             getAllCarts.mockReturnValue(carts)
