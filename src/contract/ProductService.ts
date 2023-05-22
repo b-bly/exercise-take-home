@@ -17,7 +17,7 @@ interface IProductService<P, C> {
 
     // Get a single product
     // API endpoint to get data: https://dummyjson.com/products/{productId}
-    getProduct(productId: number): P
+    getProduct(productId: number): Promise<P>
 
     // Search for products in TestMart
     // API endpoint to get data: https://dummyjson.com/products/search?q={query}
@@ -61,8 +61,9 @@ export class ProductService implements IProductService<IProduct, ICategory> {
 
     // Get a single product
     // API endpoint to get data: https://dummyjson.com/products/{productId}
-    getProduct(productId: number): IProduct {
-        throw new Error('Not yet implemented.')
+    async getProduct(productId: number): Promise<IProduct> {
+        const url = `${this.baseUrl}/products/${productId}`
+        return await this.api.get(url)
     }
 
     // Search for products in TestMart

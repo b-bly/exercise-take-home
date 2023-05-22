@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { ICartProduct } from '../../src/model'
+import { ICartProduct, IProduct } from '../../src/model'
 import { ProductBuilderBase } from './ProductBuilderBase'
 
 export class CartProductBuilder
@@ -15,6 +15,14 @@ export class CartProductBuilder
 
     get total() {
         return this.price * this.quantity
+    }
+
+    withPropertiesFromProduct(product: IProduct) {
+        this.id = product.id
+        this.title = product.title
+        this.price = product.price
+        this.discountPercentage = product.discountPercentage
+        return this
     }
 
     withPrice(price: number) {

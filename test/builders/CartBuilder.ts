@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { ICart, ICartProduct } from '../../src/model'
+import { ICart, ICartProduct, IProduct } from '../../src/model'
 import { CartProductBuilder } from './CartProductBuilder'
 import { calculateFactors } from '../util'
 
@@ -25,6 +25,13 @@ export class CartBuilder implements ICart {
 
     get totalQuantity() {
         return this.products.reduce((acc, product) => acc + product.quantity, 0)
+    }
+
+    withCartProductFromProduct(product: IProduct) {
+        const cartProductBuilder = new CartProductBuilder()
+        const cartProduct = cartProductBuilder.withPropertiesFromProduct(product).build()
+        this.products.push(cartProduct)
+        return this
     }
 
     withProduct(options: { price: number; quantity: number }) {

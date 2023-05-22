@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 
-export const getImages = () => {
-    return Array(Math.ceil(Math.random() * 10))
+export const getImages = (number = Math.ceil(Math.random() * 10)) => {
+    return Array(number)
         .fill(1)
         .map(() => faker.image.url())
 }
@@ -32,5 +32,8 @@ export const randomCategory = () => {
     return categories[Math.floor(Math.random() * categories.length)]
 }
 
-export const calculateFactors = (number: number) =>
-    Array.from(Array(number + 1), (_, i) => i).filter((i) => number % i === 0)
+export const calculateFactors = (number: number) => {
+    return Array.from(Array(number + 1), (_, i) => i).filter(
+        (i) => number % i === 0
+    )
+}

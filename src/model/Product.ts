@@ -6,11 +6,11 @@ export interface IProductBase {
 }
 
 export interface IProduct extends IProductBase {
-    description: string
-    rating: number
-    stock: number
-    brand: string
-    category: string
-    thumbnail: string
+    description?: string
+    rating?: number
+    stock?: number
+    brand?: string
+    category?: string
+    thumbnail?: string
     images: string[]
 }

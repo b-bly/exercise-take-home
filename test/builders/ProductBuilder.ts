@@ -7,6 +7,12 @@ export class ProductBuilder
     extends ProductBuilderBase<IProduct>
     implements IProduct
 {
+    static #id = 0
+
+    static #incrementID() {
+        this.#id++
+    }
+
     description = faker.commerce.productDescription()
     rating = faker.number.int()
     stock = faker.number.int()
@@ -17,14 +23,21 @@ export class ProductBuilder
 
     constructor() {
         super()
+        ProductBuilder.#incrementID()
+        this.id = ProductBuilder.#id
     }
 
-    setRating(rating: number) {
+    withNumberOfImages(number: number) {
+        this.images = getImages(number)
+        return this
+    }
+
+    withRating(rating: number) {
         this.rating = rating
         return this
     }
 
-    setTitle(title: string) {
+    withTitle(title: string) {
         this.title = title
         return this
     }

@@ -4,6 +4,7 @@ export interface ICartProduct extends IProductBase {
     quantity: number
     total: number
     discountedPrice: number
+    images?: string[]
 }
 
 export interface ICart {

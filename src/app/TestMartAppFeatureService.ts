@@ -32,7 +32,7 @@ abstract class AbstractTestMartAppFeatures {
      * @param userId The ID of the user whose cart's product information will be enriched.
      * @returns A list of products with enriched information in the user's cart.
      */
-    abstract addProductImagesToUserCart(userId: number): IProduct[]
+    abstract addProductImagesToUserCart(userId: number): Promise<IProduct[]>
 }
 
 export class TestMartAppFeatureService {
@@ -112,7 +112,24 @@ export class TestMartAppFeatureService {
         }, carts[0])
     }
 
-    addProductImagesToUserCart(userId: number): IProduct[] {
-        throw new Error('Not yet implemented.')
+    async addProductImagesToUserCart(userId: number): Promise<IProduct[]> {
+        logger.info('addProductImagesToUserCart called')
+        const cart = await this.cartService.getUserCarts(userId)[0]
+        const products = await this.getCartProducts(cart)
+        const productsWithImages = this.addImageToCartProducts(cart, products)
+        return productsWithImages;
+    }
+
+    async getCartProducts(cart: ICart) {
+        return await Promise.all(cart.products.map(async (product) => (await this.productService.getProduct(product.id))))
+    }
+
+    addImageToCartProducts(cart: ICart, completeProducts: IProduct[]) {
+        const productsWithImages = cart.products.map((cartProduct) => {
+            const fullProduct = completeProducts.find(completeProduct => completeProduct.id === cartProduct.id)
+            cartProduct.images = fullProduct.images
+            return <IProduct>cartProduct
+        })
+        return productsWithImages
     }
 }
