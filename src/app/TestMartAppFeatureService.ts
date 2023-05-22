@@ -114,19 +114,26 @@ export class TestMartAppFeatureService {
 
     async addProductImagesToUserCart(userId: number): Promise<IProduct[]> {
         logger.info('addProductImagesToUserCart called')
-        const cart = await this.cartService.getUserCarts(userId)[0]
+        const cart = (await this.cartService.getUserCarts(userId))[0]
         const products = await this.getCartProducts(cart)
         const productsWithImages = this.addImageToCartProducts(cart, products)
-        return productsWithImages;
+        return productsWithImages
     }
 
     async getCartProducts(cart: ICart) {
-        return await Promise.all(cart.products.map(async (product) => (await this.productService.getProduct(product.id))))
+        return await Promise.all(
+            cart.products.map(
+                async (product) =>
+                    await this.productService.getProduct(product.id)
+            )
+        )
     }
 
     addImageToCartProducts(cart: ICart, completeProducts: IProduct[]) {
         const productsWithImages = cart.products.map((cartProduct) => {
-            const fullProduct = completeProducts.find(completeProduct => completeProduct.id === cartProduct.id)
+            const fullProduct = completeProducts.find(
+                (completeProduct) => completeProduct.id === cartProduct.id
+            )
             cartProduct.images = fullProduct.images
             return <IProduct>cartProduct
         })

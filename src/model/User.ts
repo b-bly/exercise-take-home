@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
     id: number
     firstName: string
     lastName: string
@@ -15,58 +15,48 @@ export interface User {
     height: number
     weight: number
     eyeColor: string
-    hair: Hair
+    hair: IHair
     domain: string
     ip: string
-    address: Address
+    address: IAddress
     macAddress: string
     university: string
-    bank: Bank
-    company: Company
+    bank: IBank
+    company: ICompany
     ein: string
     ssn: string
     userAgent: string
-  }
-  
-  export interface Hair {
+}
+
+export interface IHair {
     color: string
     type: string
-  }
-  
-  export interface Address {
+}
+
+export interface IAddress {
     address: string
     city: string
-    coordinates: Coordinates
+    coordinates: ICoordinates
     postalCode: string
     state: string
-  }
-  
-  export interface Coordinates {
+}
+
+export interface ICoordinates {
     lat: number
     lng: number
-  }
-  
-  export interface Bank {
+}
+
+export interface IBank {
     cardExpire: string
     cardNumber: string
     cardType: string
     currency: string
     iban: string
-  }
-  
-  export interface Company {
-    address: Address2
+}
+
+export interface ICompany {
+    address: IAddress
     department: string
     name: string
     title: string
-  }
-  
-  export interface Address2 {
-    address: string
-    city: string
-    coordinates: Coordinates
-    postalCode: string
-    state: string
-  }
-  
-  
+}

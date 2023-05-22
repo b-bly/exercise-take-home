@@ -1,6 +1,9 @@
 import fetch from 'node-fetch'
 import { logger } from './logger'
+
 export class api {
+    baseUrl = 'https://dummyjson.com'
+
     async get(url: string) {
         logger.info(`GET url ${url}`)
         try {

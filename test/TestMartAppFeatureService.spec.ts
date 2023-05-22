@@ -17,17 +17,22 @@ describe('TestMartAppFeatureService', () => {
             productService
         )
         const products = [
-            (new ProductBuilder).withNumberOfImages(2).build(),
-            (new ProductBuilder).withNumberOfImages(2).build()
+            new ProductBuilder().withNumberOfImages(2).build(),
+            new ProductBuilder().withNumberOfImages(2).build(),
         ]
-        const cart = (new CartBuilder).withCartProductFromProduct(products[0]).withCartProductFromProduct(products[1]).build()
-        const productsWithImages = testMartAppFeatureService.addImageToCartProducts(cart, products)
-        cart.products.forEach(cartProduct => {
-            const actual = productsWithImages.find(product => product.id === cartProduct.id)
+        const cart = new CartBuilder()
+            .withCartProductFromProduct(products[0])
+            .withCartProductFromProduct(products[1])
+            .build()
+        const productsWithImages =
+            testMartAppFeatureService.addImageToCartProducts(cart, products)
+        cart.products.forEach((cartProduct) => {
+            const actual = productsWithImages.find(
+                (product) => product.id === cartProduct.id
+            )
             const expected = cartProduct
             expect(actual).toEqual(expected)
         })
-
     })
 
     describe('With service mocks', () => {
@@ -58,7 +63,6 @@ describe('TestMartAppFeatureService', () => {
                         .withTitle('iphone 6')
                         .build(),
                 ]
-                console.log(products)
                 // Stub productService with data from builder.
                 mockProductService.mockImplementation(
                     () =>
@@ -129,7 +133,6 @@ describe('TestMartAppFeatureService', () => {
                     cartService,
                     productService
                 )
-                console.log(JSON.stringify(carts, null, 4))
                 const cart =
                     await testMartAppFeatureService.getCartWithLowestTotal()
                 expect(cart.id).toBe(cartWithLowestTotal.id)

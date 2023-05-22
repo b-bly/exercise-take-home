@@ -29,7 +29,9 @@ export class CartBuilder implements ICart {
 
     withCartProductFromProduct(product: IProduct) {
         const cartProductBuilder = new CartProductBuilder()
-        const cartProduct = cartProductBuilder.withPropertiesFromProduct(product).build()
+        const cartProduct = cartProductBuilder
+            .withPropertiesFromProduct(product)
+            .build()
         this.products.push(cartProduct)
         return this
     }

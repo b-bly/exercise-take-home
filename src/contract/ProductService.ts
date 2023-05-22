@@ -21,25 +21,24 @@ interface IProductService<P, C> {
 
     // Search for products in TestMart
     // API endpoint to get data: https://dummyjson.com/products/search?q={query}
-    searchProducts(query: string): P[]
+    searchProducts(query: string): Promise<P[]>
 
     // Get all products categories in TestMart
     // API endpoint to get data: https://dummyjson.com/products/categories
-    getCategories(): C[]
+    getCategories(): Promise<C[]>
 
     // Get all products of a category
     // API endpoint to get data: https://dummyjson.com/products/category/{categoryName}
-    getProductsByCategory(categoryName: string): P[]
+    getProductsByCategory(categoryName: string): Promise<P[]>
 }
 
-export class ProductService implements IProductService<IProduct, ICategory> {
-    private api = new api()
-    private baseUrl = 'https://dummyjson.com'
-
+export class ProductService
+    extends api
+    implements IProductService<IProduct, ICategory>
+{
     // Get all products of TestMart
     // API endpoint to get data: https://dummyjson.com/products
     // https://dummyjson.com/products?limit=10&skip=5&select=title,id
-
     async getAllProducts(): Promise<IProduct[]>
     async getAllProducts(
         limit: number,
@@ -55,7 +54,7 @@ export class ProductService implements IProductService<IProduct, ICategory> {
         if (limit || skip || fields) {
             url = `${url}?limit=${limit}&skip=${skip}&select=${fields}`
         }
-        const body = await this.api.get(url)
+        const body = await this.get(url)
         return body.products
     }
 
@@ -63,24 +62,26 @@ export class ProductService implements IProductService<IProduct, ICategory> {
     // API endpoint to get data: https://dummyjson.com/products/{productId}
     async getProduct(productId: number): Promise<IProduct> {
         const url = `${this.baseUrl}/products/${productId}`
-        return await this.api.get(url)
+        return await this.get(url)
     }
 
     // Search for products in TestMart
     // API endpoint to get data: https://dummyjson.com/products/search?q={query}
-    searchProducts(query: string): IProduct[] {
-        throw new Error('Not yet implemented.')
+    async searchProducts(query: string): Promise<IProduct[]> {
+        return await this.get(`${this.baseUrl}/products/search?q=${query}`)
     }
 
     // Get all products categories in TestMart
     // API endpoint to get data: https://dummyjson.com/products/categories
-    getCategories(): ICategory[] {
-        throw new Error('Not yet implemented.')
+    async getCategories(): Promise<ICategory[]> {
+        return await this.get(`${this.baseUrl}/products/categories`)
     }
 
     // Get all products of a category
     // API endpoint to get data: https://dummyjson.com/products/category/{categoryName}
-    getProductsByCategory(categoryName: string): IProduct[] {
-        throw new Error('Not yet implemented.')
+    async getProductsByCategory(categoryName: string): Promise<IProduct[]> {
+        return await this.get(
+            `${this.baseUrl}/products/category/${categoryName}`
+        )
     }
 }

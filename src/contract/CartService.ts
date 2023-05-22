@@ -12,18 +12,15 @@ interface ICartService<T> {
 
     // Get carts of a user
     // API endpoint to get data: https://dummyjson.com/carts/user/{userId}
-    getUserCarts(userId: number): T[]
+    getUserCarts(userId: number): Promise<T[]>
 }
 
-export class CartService implements ICartService<ICart> {
-    private api = new api()
-    private baseUrl = 'https://dummyjson.com'
-
+export class CartService extends api implements ICartService<ICart> {
     // Get all carts of TestMart
     // API endpoint to get data: https://dummyjson.com/carts
     async getAllCarts(): Promise<ICart[]> {
         const url = `${this.baseUrl}/carts`
-        const body = await this.api.get(url)
+        const body = await this.get(url)
         return body
     }
 
@@ -31,13 +28,13 @@ export class CartService implements ICartService<ICart> {
     // API endpoint to get data: https://dummyjson.com/carts/{cartId}
     async getCart(cartId: number): Promise<ICart> {
         const url = `${this.baseUrl}/carts/${cartId}`
-        const body = await this.api.get(url)
+        const body = await this.get(url)
         return body
     }
 
     // Get carts of a user
     // API endpoint to get data: https://dummyjson.com/carts/user/{userId}
-    getUserCarts(userId: number): ICart[] {
-        throw new Error('Not yet implemented.')
+    async getUserCarts(userId: number): Promise<ICart[]> {
+        return await this.get(`${this.baseUrl}/carts/user/${userId}`)
     }
 }
