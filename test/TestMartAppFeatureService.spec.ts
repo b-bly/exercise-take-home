@@ -56,7 +56,7 @@ describe('TestMartAppFeatureService', () => {
     })
 
     describe('getCartWithHighestTotal', () => {
-        it('Should return the cart with the highest total when price is varried.', () => {
+        it('Should return the cart with the highest total when price is varried.', async () => {
             const cartWithHighestTotal = (new CartBuilder()).withProduct({price: 30, quantity: 5}).build()
             const carts = [
                 (new CartBuilder()).withProduct({price: 10, quantity: 5}).build(),
@@ -70,8 +70,12 @@ describe('TestMartAppFeatureService', () => {
                 cartService,
                 productService
             )
-            const cart = testMartAppFeatureService.getCartWithHighestTotal()
+            const cart = await testMartAppFeatureService.getCartWithHighestTotal()
             expect(cart.id).toBe(cartWithHighestTotal.id)
         })
     })
 })
+
+// TODO error guessing
+// boundary value
+// equivalence partitioning

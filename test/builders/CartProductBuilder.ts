@@ -8,9 +8,12 @@ export class CartProductBuilder
 {
     discountedPrice: number = this.price * this.discountPercentage
     quantity: number = faker.number.int()
-    total: number = this.price * this.quantity
 
     constructor() { super() }
+
+    get total() {
+        return this.price * this.quantity
+    }
 
     withPrice(price: number) {
         this.price = price

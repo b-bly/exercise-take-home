@@ -65,12 +65,23 @@ export class TestMartAppFeatureService {
         const sortedProducts = products
             .filter((product) => product.rating <= rating)
             .map((product) => product.title)
-        logger.info(`sorted products ${sortedProducts}`)
+        logger.debug(`sorted products ${sortedProducts}`)
         return sortedProducts
     }
 
-    getCartWithHighestTotal(): ICart {
-        throw new Error('Not yet implemented.')
+    async getCartWithHighestTotal(): Promise<ICart> {
+        logger.info('getCartWithHighestTotal called.')
+        const carts = await this.cartService.getAllCarts()
+        const cartWithHighestTotal = carts.reduce(
+            (_cartWithHighestTotal, cart) => {
+                return cart.total > _cartWithHighestTotal.total
+                    ? cart
+                    : _cartWithHighestTotal
+            },
+            carts[0]
+        )
+        logger.debug(`cart with highest total: ${cartWithHighestTotal}`)
+        return cartWithHighestTotal
     }
 
     getCartWithLowestTotal(): ICart {
