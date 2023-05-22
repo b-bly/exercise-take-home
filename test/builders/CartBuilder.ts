@@ -1,11 +1,11 @@
 import { faker } from '@faker-js/faker'
-import { ICart } from '../../src/model'
+import { ICart, ICartProduct } from '../../src/model'
 import { CartProductBuilder } from './CartProductBuilder'
 import { calculateFactors } from '../util'
 
 export class CartBuilder implements ICart {
     id = faker.number.int()
-    products = [new CartProductBuilder().build()]
+    products: ICartProduct[] = []
     userId = faker.number.int()
 
     get total() {
@@ -30,7 +30,11 @@ export class CartBuilder implements ICart {
     withProduct(options: { price: number; quantity: number }) {
         const { price, quantity } = options
         const cartProductBuilder = new CartProductBuilder()
-        cartProductBuilder.withPrice(price).withQuantity(quantity)
+        const cartProduct = cartProductBuilder
+            .withPrice(price)
+            .withQuantity(quantity)
+            .build()
+        this.products.push(cartProduct)
         return this
     }
 

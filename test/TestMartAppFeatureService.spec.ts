@@ -57,11 +57,20 @@ describe('TestMartAppFeatureService', () => {
 
     describe('getCartWithHighestTotal', () => {
         it('Should return the cart with the highest total when price is varried.', async () => {
-            const cartWithHighestTotal = (new CartBuilder()).withProduct({price: 30, quantity: 5}).build()
+            const cartWithHighestTotal = new CartBuilder()
+                .withProduct({ price: 30, quantity: 5 })
+                .withProduct({ price: 30, quantity: 5 })
+                .build()
             const carts = [
-                (new CartBuilder()).withProduct({price: 10, quantity: 5}).build(),
-                (new CartBuilder()).withProduct({price: 20, quantity: 5}).build(),
-                cartWithHighestTotal
+                new CartBuilder()
+                    .withProduct({ price: 10, quantity: 5 })
+                    .withProduct({ price: 10, quantity: 5 })
+                    .build(),
+                new CartBuilder()
+                    .withProduct({ price: 20, quantity: 5 })
+                    .withProduct({ price: 20, quantity: 5 })
+                    .build(),
+                cartWithHighestTotal,
             ]
             mockCartService.mockImplementation(
                 () => new Promise((resolve) => resolve(<ICart[]>carts))
@@ -70,8 +79,37 @@ describe('TestMartAppFeatureService', () => {
                 cartService,
                 productService
             )
-            const cart = await testMartAppFeatureService.getCartWithHighestTotal()
+            const cart =
+                await testMartAppFeatureService.getCartWithHighestTotal()
             expect(cart.id).toBe(cartWithHighestTotal.id)
+        })
+    })
+
+    describe('getCartWithLowestTotal', () => {
+        it('Should return the cart with the lowest total when price is varried.', async () => {
+            const cartWithLowestTotal = new CartBuilder()
+                .withProduct({ price: 10, quantity: 5 })
+                .build()
+            const carts = [
+                cartWithLowestTotal,
+                new CartBuilder()
+                    .withProduct({ price: 20, quantity: 5 })
+                    .build(),
+                new CartBuilder()
+                    .withProduct({ price: 30, quantity: 5 })
+                    .build(),
+            ]
+            mockCartService.mockImplementation(
+                () => new Promise((resolve) => resolve(<ICart[]>carts))
+            )
+            const testMartAppFeatureService = new TestMartAppFeatureService(
+                cartService,
+                productService
+            )
+            console.log(JSON.stringify(carts, null, 4))
+            const cart =
+                await testMartAppFeatureService.getCartWithLowestTotal()
+            expect(cart.id).toBe(cartWithLowestTotal.id)
         })
     })
 })

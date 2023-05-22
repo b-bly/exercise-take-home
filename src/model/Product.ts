@@ -5,7 +5,7 @@ export interface IProductBase {
     discountPercentage: number
 }
 
-export interface IProduct extends IProductBase{
+export interface IProduct extends IProductBase {
     description: string
     rating: number
     stock: number

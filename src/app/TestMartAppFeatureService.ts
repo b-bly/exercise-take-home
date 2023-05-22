@@ -72,20 +72,44 @@ export class TestMartAppFeatureService {
     async getCartWithHighestTotal(): Promise<ICart> {
         logger.info('getCartWithHighestTotal called.')
         const carts = await this.cartService.getAllCarts()
-        const cartWithHighestTotal = carts.reduce(
-            (_cartWithHighestTotal, cart) => {
-                return cart.total > _cartWithHighestTotal.total
-                    ? cart
-                    : _cartWithHighestTotal
-            },
-            carts[0]
+        const cartWithHighestTotal = this.sortCartsByProperty(
+            'total',
+            'highest',
+            carts
         )
         logger.debug(`cart with highest total: ${cartWithHighestTotal}`)
         return cartWithHighestTotal
     }
 
-    getCartWithLowestTotal(): ICart {
-        throw new Error('Not yet implemented.')
+    async getCartWithLowestTotal(): Promise<ICart> {
+        logger.info('getCartWithLowestTotal called.')
+        const carts = await this.cartService.getAllCarts()
+        const cartWithLowestTotal = this.sortCartsByProperty(
+            'total',
+            'lowest',
+            carts
+        )
+        logger.debug(`cart with lowest total: ${cartWithLowestTotal}`)
+        return cartWithLowestTotal
+    }
+
+    sortCartsByProperty(
+        property: string,
+        direction = 'highest',
+        carts: ICart[]
+    ) {
+        return carts.reduce((_cartWithLowestTotal, cart) => {
+            if (direction === 'highest') {
+                // @ts-ignore
+                return cart[property] > _cartWithLowestTotal[property]
+                    ? cart
+                    : _cartWithLowestTotal
+            }
+            // @ts-ignore
+            return cart[property] < _cartWithLowestTotal[property]
+                ? cart
+                : _cartWithLowestTotal
+        }, carts[0])
     }
 
     addProductImagesToUserCart(userId: number): IProduct[] {

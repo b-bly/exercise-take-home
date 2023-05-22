@@ -3,7 +3,10 @@ import { getImages, randomCategory } from '../util'
 import { IProduct } from '../../src/model'
 import { ProductBuilderBase } from './ProductBuilderBase'
 
-export class ProductBuilder extends ProductBuilderBase<IProduct> implements IProduct {
+export class ProductBuilder
+    extends ProductBuilderBase<IProduct>
+    implements IProduct
+{
     description = faker.commerce.productDescription()
     rating = faker.number.int()
     stock = faker.number.int()

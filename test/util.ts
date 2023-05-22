@@ -32,6 +32,5 @@ export const randomCategory = () => {
     return categories[Math.floor(Math.random() * categories.length)]
 }
 
-export const calculateFactors = (number: number) => Array
-    .from(Array(number + 1), (_, i) => i)
-    .filter(i => number % i === 0)
+export const calculateFactors = (number: number) =>
+    Array.from(Array(number + 1), (_, i) => i).filter((i) => number % i === 0)
