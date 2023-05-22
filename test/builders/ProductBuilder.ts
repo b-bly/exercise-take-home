@@ -1,18 +1,20 @@
-import { faker } from '@faker-js/faker';
-import { getImages, randomCategory } from '../util';
+import { faker } from '@faker-js/faker'
+import { getImages, randomCategory } from '../util'
+import { IProduct } from '../../src/model'
+import { ProductBuilderBase } from './ProductBuilderBase'
 
-export class ProductBuilder {
-    private id = faker.number.int()
-    private title = faker.commerce.productName()
-    private description = faker.commerce.productDescription()
-    private price = faker.number.int()
-    private discountPercentage = parseFloat(faker.number.float({ min: 0 }).toFixed(2))
-    private rating = faker.number.int()
-    private stock = faker.number.int()
-    private brand = faker.commerce.productName()
-    private category = randomCategory()
-    private thumbnail = faker.image.url()
-    private images = getImages();
+export class ProductBuilder extends ProductBuilderBase<IProduct> implements IProduct {
+    description = faker.commerce.productDescription()
+    rating = faker.number.int()
+    stock = faker.number.int()
+    brand = faker.commerce.productName()
+    category = randomCategory()
+    thumbnail = faker.image.url()
+    images = getImages()
+
+    constructor() {
+        super()
+    }
 
     setRating(rating: number) {
         this.rating = rating
@@ -24,7 +26,7 @@ export class ProductBuilder {
         return this
     }
 
-    build () {
+    build() {
         return {
             id: this.id,
             title: this.title,
@@ -36,7 +38,7 @@ export class ProductBuilder {
             brand: this.brand,
             category: this.category,
             thumbnail: this.thumbnail,
-            images: this.images
+            images: this.images,
         }
     }
 }

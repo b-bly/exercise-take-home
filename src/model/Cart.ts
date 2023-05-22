@@ -1,10 +1,8 @@
-interface ICartProduct {
-    id: number
-    title: string
-    price: number 
+import { IProductBase } from './Product'
+
+export interface ICartProduct extends IProductBase {
     quantity: number
     total: number
-    discountPercentage: number
     discountedPrice: number
 }
 

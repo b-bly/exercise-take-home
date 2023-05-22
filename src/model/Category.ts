@@ -20,4 +20,3 @@ export enum ICategory {
     motorcycle = 'motorcycle',
     lighting = 'lighting',
 }
-

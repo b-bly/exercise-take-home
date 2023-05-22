@@ -1,4 +1,4 @@
-export { ICart } from  './Cart'
+export { ICart, ICartProduct } from './Cart'
 export { ICartResponse } from './CartResponse'
 export { IProduct } from './Product'
 export { ICategory } from './Category'

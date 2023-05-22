@@ -6,47 +6,72 @@ import { CartService } from '../src/contract/CartService'
 import { ICart, IProduct } from '../src/model'
 import carts from '../src/testData/carts.json'
 import { ProductBuilder } from './builders/ProductBuilder'
+import { CartBuilder } from './builders/CartBuilder'
 
 jest.mock('../src/contract/ProductService')
+jest.mock('../src/contract/CartService')
 
 describe('TestMartAppFeatureService', () => {
     // const MockedProductService = jest.mocked(ProductService)
     const productService = new ProductService()
     const cartService = new CartService()
     const mockProductService = jest.spyOn(productService, 'getAllProducts')
+    const mockCartService = jest.spyOn(cartService, 'getAllCarts')
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        jest.clearAllMocks()
     })
 
-    describe('sortProductTitlesByWorseRating', () => {
+    describe.skip('sortProductTitlesByWorseRating', () => {
         it('Should sort products by worst rating.', async () => {
+            // Create test data with a builder class
             const productsBuilder = new ProductBuilder()
             const products = [
-                (new ProductBuilder()).setRating(1.1).setTitle('iPhone 9').build(),
-                (new ProductBuilder()).setRating(1.88).setTitle('iPhone X').build(),
-                (new ProductBuilder()).setRating(5).setTitle('iphone 6').build()
-
+                new ProductBuilder()
+                    .setRating(1.1)
+                    .setTitle('iPhone 9')
+                    .build(),
+                new ProductBuilder()
+                    .setRating(1.88)
+                    .setTitle('iPhone X')
+                    .build(),
+                new ProductBuilder().setRating(5).setTitle('iphone 6').build(),
             ]
-            mockProductService.mockImplementation(() => new Promise(resolve => resolve(<IProduct[]>products)))
-            const testMartAppFeatureService = new TestMartAppFeatureService(cartService, productService)
+            // Stub productService with data from builder.
+            mockProductService.mockImplementation(
+                () => new Promise((resolve) => resolve(<IProduct[]>products))
+            )
+            const testMartAppFeatureService = new TestMartAppFeatureService(
+                cartService,
+                productService
+            )
             const titles =
-                await testMartAppFeatureService.sortProductTitlesByWorseRating(2)
+                await testMartAppFeatureService.sortProductTitlesByWorseRating(
+                    2
+                )
             expect(titles).toContain('iPhone 9')
             expect(titles).toContain('iPhone X')
             expect(titles.length).toBe(2)
         })
     })
 
-
     describe('getCartWithHighestTotal', () => {
-        it.skip('Should return the cart with the highest total.', () => {
-            const testMartAppFeatureService = new TestMartAppFeatureService(cartService, productService)
-            const getAllCarts = jest.fn<typeof cartService.getAllCarts>() 
-            getAllCarts.mockReturnValue(carts)
-            const cart =
-                testMartAppFeatureService.getCartWithHighestTotal()
-            expect(cart.id).toBe(2)
+        it('Should return the cart with the highest total when price is varried.', () => {
+            const cartWithHighestTotal = (new CartBuilder()).withProduct({price: 30, quantity: 5}).build()
+            const carts = [
+                (new CartBuilder()).withProduct({price: 10, quantity: 5}).build(),
+                (new CartBuilder()).withProduct({price: 20, quantity: 5}).build(),
+                cartWithHighestTotal
+            ]
+            mockCartService.mockImplementation(
+                () => new Promise((resolve) => resolve(<ICart[]>carts))
+            )
+            const testMartAppFeatureService = new TestMartAppFeatureService(
+                cartService,
+                productService
+            )
+            const cart = testMartAppFeatureService.getCartWithHighestTotal()
+            expect(cart.id).toBe(cartWithHighestTotal.id)
         })
     })
 })

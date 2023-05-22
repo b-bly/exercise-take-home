@@ -1,6 +1,5 @@
-import { IProduct, ICategory, IProductResponse } from "../model"
+import { IProduct, ICategory, IProductResponse } from '../model'
 import { api } from '../util/api'
-
 
 // Note: the generic type parameters P and C are used to represent the types of the product and category, respectively
 interface IProductService<P, C> {
@@ -10,7 +9,11 @@ interface IProductService<P, C> {
 
     // Get all products of TestMart using parameters
     // API endpoint to get data: https://dummyjson.com/products?limit={limit}&skip={skip}&select={comma separated fields of product}
-    getAllProducts(limit: number, skip: number, ...fields: string[]): Promise<P[]>
+    getAllProducts(
+        limit: number,
+        skip: number,
+        ...fields: string[]
+    ): Promise<P[]>
 
     // Get a single product
     // API endpoint to get data: https://dummyjson.com/products/{productId}
@@ -30,18 +33,28 @@ interface IProductService<P, C> {
 }
 
 export class ProductService implements IProductService<IProduct, ICategory> {
+    private api = new api()
+    private baseUrl = 'https://dummyjson.com'
+
     // Get all products of TestMart
     // API endpoint to get data: https://dummyjson.com/products
-    api = new api()
     // https://dummyjson.com/products?limit=10&skip=5&select=title,id
 
     async getAllProducts(): Promise<IProduct[]>
-    async getAllProducts(limit: number, skip: number, ...fields: string[]): Promise<IProduct[]> 
-    async getAllProducts(limit?: number, skip?: number, ...fields: string[]): Promise<IProduct[]> {
-        let url = 'https://dummyjson.com/products'
-        // if (limit || skip || fields) {
-        //     url = `${url}?limit=${limit}&skip=${skip}&select=${fields}`
-        // }
+    async getAllProducts(
+        limit: number,
+        skip: number,
+        ...fields: string[]
+    ): Promise<IProduct[]>
+    async getAllProducts(
+        limit?: number,
+        skip?: number,
+        ...fields: string[]
+    ): Promise<IProduct[]> {
+        let url = `${this.baseUrl}/products`
+        if (limit || skip || fields) {
+            url = `${url}?limit=${limit}&skip=${skip}&select=${fields}`
+        }
         const body = await this.api.get(url)
         return body.products
     }

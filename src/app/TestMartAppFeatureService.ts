@@ -66,7 +66,7 @@ export class TestMartAppFeatureService {
             .filter((product) => product.rating <= rating)
             .map((product) => product.title)
         logger.info(`sorted products ${sortedProducts}`)
-        return sortedProducts   
+        return sortedProducts
     }
 
     getCartWithHighestTotal(): ICart {
