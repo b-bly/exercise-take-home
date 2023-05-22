@@ -27,7 +27,7 @@ interface IUserService<U> {
     searchUsers(query: string): Promise<U[]>
 }
 
-export class UserService<IUser> extends api implements IUserService<IUser> {
+export class UserService extends api implements IUserService<IUser> {
     /**
      * Retrieves a list of all users in TestMart.
      * API endpoint to get data: https://dummyjson.com/users

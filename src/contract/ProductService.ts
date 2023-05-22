@@ -1,4 +1,4 @@
-import { IProduct, ICategory, IProductResponse } from '../model'
+import { IProduct, ICategory } from '../model'
 import { api } from '../util/api'
 
 // Note: the generic type parameters P and C are used to represent the types of the product and category, respectively

@@ -47,6 +47,12 @@ export class CartBuilder implements ICart {
         return this
     }
 
+    withProducts(products: ICartProduct[]) {
+        this.products = products
+        return this
+    }
+    
+
     build() {
         return {
             id: this.id,
