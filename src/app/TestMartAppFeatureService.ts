@@ -17,6 +17,7 @@ export class TestMartAppFeatureService {
      * @param rating The rating threshold.
      */
     getProductTitlesByWorseRating(rating: number): void {
+        logger.info(`getProductTitlesByWorseRating called with rating ${rating}`)
         const products = this.productService
             .getAllProducts(1000, 0, 'rating', 'title')
             .then((_products) => {
@@ -102,19 +103,23 @@ export class TestMartAppFeatureService {
      * @returns A list of products with enriched information in the user's cart.
      */
     async addProductImagesToUserCart(userId: number): Promise<IProduct[]> {
-        logger.info('addProductImagesToUserCart called')
+        logger.info(`addProductImagesToUserCart called for userId ${userId}`)
         const cart = (await this.cartService.getUserCarts(userId))[0]
         const completeProducts = await this.getCartProducts(cart)
-        console.log(completeProducts)
         const productsWithImages = this.addImageToCartProducts(cart, completeProducts)
+        logger.debug(`addProductImagesToUserCart returning ${productsWithImages}`)
         return productsWithImages
     }
 
+    /**
+     *  
+     * @param cart a user's cart
+     * @returns the full product objects for a user's cart
+     */
     async getCartProducts(cart: ICart) {
         return await Promise.all(
             cart.products.map(
                 async (product) => { 
-                    console.log('***************')
                     return await this.productService.getProduct(product.id)
 
                 }
@@ -122,6 +127,12 @@ export class TestMartAppFeatureService {
         )
     }
 
+    /**
+     * 
+     * @param cart user's cart
+     * @param completeProducts a user's products as returned by productService.getProduct
+     * @returns A list of user's products with the images added.
+     */
     addImageToCartProducts(cart: ICart, completeProducts: IProduct[]) {
         const productsWithImages = cart.products.map((cartProduct) => {
             const fullProduct = completeProducts.find(
